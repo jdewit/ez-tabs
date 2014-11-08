@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--dependencies start -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.0/css/bootstrap.css" rel="stylesheet">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
+  <!--dependencies end -->
+
+  <script src="src/ez-tabs.js"></script>
+  <script src="dist/ez-tabs-tpl.min.js"></script>
+
+  <script>
+    angular.module('myApp', ['ez.tabs'])
+
+    .controller('AppCtrl', ['$scope', function AppCtrl($scope) {
+
+    }])
+;
+
+  </script>
+</head>
+<body ng-app="myApp">
+  <div ng-controller="AppCtrl" class="container">
+    <div class="page-header">
+      <h1>ez-tabs</h1>
+    </div>
+    <div class="page-body">
+      <tabset>
+        <tab> 
+          <tab-heading>Tab 1</tab-heading>
+          some content
+        </tab>
+        <tab heading="Tab 2">
+          Other content
+        </tab>
+        <tab heading="Tab 3">
+          More content
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</body>
+
+</html>
+
