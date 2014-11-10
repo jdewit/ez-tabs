@@ -15,15 +15,26 @@
       border: none;
 
       li {
+        margin-top: 5px;
         display: block;
         width: 100%;
 
         a {
           width: 100%;
+          border-color: transparent;
+
+          &:hover {
+            border: 1px solid #ddd;
+          }
+
+        }
+        
+        &:first-child {
+          padding-top: 5px;
         }
 
         &.active a {
-          border-bottom-color: #ddd;
+          border: 1px solid #ddd;
         }
       }
 
@@ -33,29 +44,45 @@
   &.tabs-left {
     .nav-tabs {
       left: 0;
+
+      li {
+        padding-left: 10px;
+
+        a {
+          border-radius: 0px;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+        }
+
+        &.active a {
+          border-right-color: #fff;
+        }
+      }
     }
 
     .tab-content {
       margin-left: 119px;
       border-left: 1px solid #ddd;
     }
-
-    li {
-      a {
-        border-radius: 0px;
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-      }
-
-      &.active a {
-        border-right-color: #fff;
-      }
-    }
   }
 
   &.tabs-right {
     .nav-tabs {
       right: 0;
+
+      li {
+        padding-right: 10px;
+
+        a {
+          border-radius: 0px;
+          border-top-right-radius: 4px;
+          border-bottom-right-radius: 4px;
+        }
+
+        &.active a {
+          border-left-color: #fff;
+        }
+      }
     }
 
     .tab-content {
@@ -63,17 +90,6 @@
       border-right: 1px solid #ddd;
     }
 
-    li {
-      a {
-        border-radius: 0px;
-        border-top-right: 4px;
-        border-bottom-right: 4px;
-      }
-
-      &.active a {
-        border-left-color: #fff;
-      }
-    }
 
   }
 }
