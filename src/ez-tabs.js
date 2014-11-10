@@ -2,7 +2,7 @@ angular.module('ez.tabs', [])
 
 /**
  * @ngdoc overview
- * @name ui.bootstrap.tabs
+ * @name ez.tabs.tabs
  *
  * @description
  * AngularJS version of the tabs directive.
@@ -53,7 +53,7 @@ angular.module('ez.tabs', [])
 
 /**
  * @ngdoc directive
- * @name ui.bootstrap.tabs.directive:tabset
+ * @name ez.tabs.tabs.directive:tabset
  * @restrict EA
  *
  * @description
@@ -63,7 +63,7 @@ angular.module('ez.tabs', [])
  * @param {boolean=} justified Whether or not to use justified styling for the tabs.
  *
  * @example
-<example module="ui.bootstrap">
+<example module="ez.tabs">
   <file name="index.html">
     <tabset>
       <tab heading="Tab 1"><b>First</b> Content!</tab>
@@ -90,7 +90,7 @@ angular.module('ez.tabs', [])
       type: '@'
     },
     controller: 'TabsetController',
-    templateUrl: function(element, attr) { return attr.templateUrl ? attr.templateUrl : 'ez-tabs-tabset.html'; },
+    templateUrl: 'ez-tabs-tabset.html',
     link: function(scope, element, attrs) {
       scope.vertical = angular.isDefined(attrs.vertical) ? scope.$parent.$eval(attrs.vertical) : false;
       scope.justified = angular.isDefined(attrs.justified) ? scope.$parent.$eval(attrs.justified) : false;
@@ -100,19 +100,19 @@ angular.module('ez.tabs', [])
 
 /**
  * @ngdoc directive
- * @name ui.bootstrap.tabs.directive:tab
+ * @name ez.tabs.tabs.directive:tab
  * @restrict EA
  *
- * @param {string=} heading The visible heading, or title, of the tab. Set HTML headings with {@link ui.bootstrap.tabs.directive:tabHeading tabHeading}.
+ * @param {string=} heading The visible heading, or title, of the tab. Set HTML headings with {@link ez.tabs.tabs.directive:tabHeading tabHeading}.
  * @param {string=} select An expression to evaluate when the tab is selected.
  * @param {boolean=} active A binding, telling whether or not this tab is selected.
  * @param {boolean=} disabled A binding, telling whether or not this tab is disabled.
  *
  * @description
- * Creates a tab with a heading and content. Must be placed within a {@link ui.bootstrap.tabs.directive:tabset tabset}.
+ * Creates a tab with a heading and content. Must be placed within a {@link ez.tabs.tabs.directive:tabset tabset}.
  *
  * @example
-<example module="ui.bootstrap">
+<example module="ez.tabs">
   <file name="index.html">
     <div ng-controller="TabsDemoCtrl">
       <button class="btn btn-small" ng-click="items[0].active = true">
@@ -156,14 +156,14 @@ angular.module('ez.tabs', [])
 
 /**
  * @ngdoc directive
- * @name ui.bootstrap.tabs.directive:tabHeading
+ * @name ez.tabs.tabs.directive:tabHeading
  * @restrict EA
  *
  * @description
- * Creates an HTML heading for a {@link ui.bootstrap.tabs.directive:tab tab}. Must be placed as a child of a tab element.
+ * Creates an HTML heading for a {@link ez.tabs.tabs.directive:tab tab}. Must be placed as a child of a tab element.
  *
  * @example
-<example module="ui.bootstrap">
+<example module="ez.tabs">
   <file name="index.html">
     <tabset>
       <tab>

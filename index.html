@@ -9,9 +9,26 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
   <!--dependencies end -->
 
+  <link href="dist/ez-tabs.min.css" rel="stylesheet"/>
   <script src="src/ez-tabs.js"></script>
   <script src="dist/ez-tabs-tpl.min.js"></script>
 
+  <style>
+    .tabs-left {
+      border: 1px solid #ddd;
+      background-color: #ccc;
+    }
+    .tabs-left .tab-content {
+      background-color: #fff;
+    }
+    .tabs-left li {
+      padding-left: 10px;
+    }
+    .tabs-left li:first-child {
+      padding-top: 10px;
+    }
+
+  </style>
   <script>
     angular.module('myApp', ['ez.tabs'])
 
@@ -40,6 +57,39 @@
           More content
         </tab>
       </tabset>
+      <br>
+      <h3>Left Tabs <small>With some custom css</small></h3>
+      <hr>
+      <br>
+      <tabset class="tabs-left">
+        <tab> 
+          <tab-heading>Tab 1</tab-heading>
+          some content
+        </tab>
+        <tab heading="Tab 2">
+          Other content
+        </tab>
+        <tab heading="Tab 3">
+          More content
+        </tab>
+      </tabset>
+      <br>
+      <h3>Right Tabs</h3>
+      <hr>
+      <br>
+      <tabset class="tabs-right">
+        <tab> 
+          <tab-heading>Tab 1</tab-heading>
+          some content
+        </tab>
+        <tab heading="Tab 2">
+          Other content
+        </tab>
+        <tab heading="Tab 3">
+          More content
+        </tab>
+      </tabset>
+
     </div>
   </div>
 </body>
