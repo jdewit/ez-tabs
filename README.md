@@ -1,5 +1,5 @@
-EZ-DROPDOWN
-===========
+EZ-TABS
+=======
 
 This is a fork of the <a href="https://github.com/angular-ui/bootstrap">angular-ui bootstrap tabs</a>. 
 
@@ -20,7 +20,20 @@ angular.module('yourApp', ['ez.tabs'])
 ```
 
 ###Usage
-
+```html
+  <tabset>
+    <tab> 
+      <tab-heading>Tab 1</tab-heading>
+      some content
+    </tab>
+    <tab heading="Tab 2">
+      Other content
+    </tab>
+    <tab heading="Tab 3">
+      More content
+    </tab>
+  </tabset>
+```
 
 ###Demo
 
