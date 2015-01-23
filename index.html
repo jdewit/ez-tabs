@@ -13,27 +13,31 @@
   <script src="src/ez-tabs.js"></script>
   <script src="dist/ez-tabs-tpl.min.js"></script>
 
-  <style>
-    .tabs-left {
-      border: 1px solid #ddd;
-      background-color: #eee;
-    }
-    .tabs-left .tab-content {
-      background-color: #fff;
-    }
-    .tabs-left li a:hover {
-      background-color: #ddd;
-    }
-    .tabs-right {
-      border: 1px solid #ddd;
-    }
-
-  </style>
   <script>
     angular.module('myApp', ['ez.tabs'])
 
-    .controller('AppCtrl', ['$scope', function AppCtrl($scope) {
+    .controller('AppCtrl', ['$scope', '$interval', '$q', function AppCtrl($scope, $interval, $q) {
+      $scope.likes = 10;
 
+      $scope.config = {
+        preSelectPromise: function() {
+          var deferred = $q.defer();
+
+          setTimeout(function() {
+            if (confirm('Are you sure?')) {
+              deferred.resolve();
+            } else {
+              deferred.reject();
+            }
+          }, 100);
+
+          return deferred.promise;
+        }
+      };
+
+      $interval(function() {
+        $scope.likes++;
+      }, 100);
     }])
 ;
 
@@ -48,13 +52,15 @@
       <tabset>
         <tab> 
           <tab-heading>Tab 1</tab-heading>
-          some content
+          <tab-content>Transcluded variables bind of course. Likes: {{ likes }}</tab-content>
         </tab>
-        <tab heading="Tab 2">
-          Other content
+        <tab>
+          <tab-heading>Tab 2</tab-heading>
+          <tab-content>Other content</tab-content>
         </tab>
-        <tab heading="Tab 3">
-          More content
+        <tab>
+          <tab-heading>Tab 3</tab-heading>
+          <tab-content>More content</tab-content>
         </tab>
       </tabset>
       <br>
@@ -64,32 +70,39 @@
       <tabset class="tabs-left">
         <tab> 
           <tab-heading>Tab 1</tab-heading>
-          some content
+          <tab-content>More content</tab-content>
         </tab>
-        <tab heading="Tab 2">
-          Other content
+        <tab>
+          <tab-heading>Tab 2</tab-heading>
+          <tab-content>More content 2</tab-content>
         </tab>
-        <tab heading="Tab 3">
-          More content
+        <tab>
+          <tab-heading>Tab 3</tab-heading>
+          <tab-content>More content 3</tab-content>
         </tab>
       </tabset>
       <br>
-      <h3>Right Tabs</h3>
+      <h3>Right Tabs <small>With selection control flow</small></h3>
       <hr>
       <br>
-      <tabset class="tabs-right">
+      <tabset class="tabs-right" config="config">
         <tab> 
           <tab-heading>Tab 1</tab-heading>
-          some content
+          <tab-content src="custom.html"></tab-content>
         </tab>
-        <tab heading="Tab 2">
-          Other content
+        <tab>
+          <tab-heading>Tab 2</tab-heading>
+          <tab-content>More content 2</tab-content>
         </tab>
-        <tab heading="Tab 3">
-          More content
+        <tab>
+          <tab-heading>Tab 3</tab-heading>
+          <tab-content>More content 3</tab-content>
         </tab>
       </tabset>
 
+      <script id="custom.html" type="text/ng-template">
+        <p>I was loaded from a custom template</p>
+      </script>
     </div>
   </div>
 </body>

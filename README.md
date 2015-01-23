@@ -1,9 +1,12 @@
 EZ-TABS
 =======
 
-This is a fork of the <a href="https://github.com/angular-ui/bootstrap">angular-ui bootstrap tabs</a>. 
+Bootstrap 3 tabs directive. 
 
-The angular-ui-bootstrap project is too complicated. I think it would be better suited to split all of the components into individual repos. 
+###Features
+- Lazy tab loading
+- Load tab content via templateCache
+- Pre selection control flow (decide if tab should be allowed to be selected)
 
 ###Installation
 
@@ -24,13 +27,15 @@ angular.module('yourApp', ['ez.tabs'])
   <tabset>
     <tab> 
       <tab-heading>Tab 1</tab-heading>
-      some content
+      <tab-content>some content</tab-content>
     </tab>
-    <tab heading="Tab 2">
-      Other content
+    <tab>
+      <tab-heading>Tab 2</tab-heading>
+      <tab-content src="some-template.html"></tab-content>
     </tab>
-    <tab heading="Tab 3">
-      More content
+    <tab>
+      <tab-heading>Tab 3</tab-heading>
+      <tab-content>some content 3</tab-content>
     </tab>
   </tabset>
 ```

@@ -1,6 +1,14 @@
 .ez-tabs {
+  position: relative;
+  display: block;
 
-  .tab-content {
+  .nav-tabs {
+    a {
+      cursor: pointer;
+    }
+  }
+
+  div > .tab-content {
     padding: 10px;
     min-height: 150px;
   }
@@ -8,41 +16,46 @@
   &.tabs-left, &.tabs-right {
     position: relative;
 
-    .nav-tabs {
-      width: 120px;
-      position: absolute;
-      top: 0;
-      border: none;
+    div {
+      position: relative;
 
-      li {
-        margin-top: 5px;
-        display: block;
-        width: 100%;
+      > .nav-tabs {
+        width: 120px;
+        position: absolute;
+        top: 0;
+        border: none;
+        z-index: 1;
 
-        a {
+        li {
+          margin-top: 5px;
+          display: block;
           width: 100%;
-          border-color: transparent;
 
-          &:hover {
-            border: 1px solid #ddd;
+          a {
+            width: 100%;
+            border-color: transparent;
+
+            &:hover {
+              border: 1px solid #ddd;
+            }
+
           }
 
-        }
-        
-        &:first-child {
-          padding-top: 5px;
+          &:first-child {
+            padding-top: 5px;
+          }
+
+          &.active a {
+            border: 1px solid #ddd;
+          }
         }
 
-        &.active a {
-          border: 1px solid #ddd;
-        }
       }
-
     }
   }
 
   &.tabs-left {
-    .nav-tabs {
+    div > .nav-tabs {
       left: 0;
 
       li {
@@ -60,14 +73,14 @@
       }
     }
 
-    .tab-content {
+    div > .tab-content {
       margin-left: 119px;
       border-left: 1px solid #ddd;
     }
   }
 
   &.tabs-right {
-    .nav-tabs {
+    div > .nav-tabs {
       right: 0;
 
       li {
@@ -85,11 +98,10 @@
       }
     }
 
-    .tab-content {
+    div > .tab-content {
       margin-right: 119px;
       border-right: 1px solid #ddd;
     }
-
 
   }
 }
