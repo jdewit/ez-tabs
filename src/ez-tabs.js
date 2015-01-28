@@ -23,13 +23,32 @@ angular.module('ez.tabs', [])
 
         scope.options = angular.extend({}, EzTabsConfig, scope.config);
 
-        tabEls.each(function(i) {
-
+        var addTab = function(tabEl) {
           scope.tabs.push({
-            heading: $sce.trustAsHtml(tabEls[i].children[0].innerHTML),
-            rawHtml: tabEls[i].children[1].innerHTML,
-            src: tabEls[i].children[1].getAttribute('src')
+            heading: $sce.trustAsHtml(tabEl.children[0].innerHTML),
+            rawHtml: tabEl.children[1].innerHTML,
+            src: tabEl.children[1].getAttribute('src')
           });
+        };
+
+        var removeTab = function(i) {
+          scope.tabs.splice(i, 1);
+        };
+
+        tabEls.each(function(i) {
+          var ngIf = tabEls[i].getAttribute('ng-if');
+
+          if (ngIf) {
+            scope.$parent.$watch(ngIf, function(newVal) {
+              if (!!newVal) {
+                addTab(tabEls[i]);
+              } else {
+                removeTab(i);
+              }
+            });
+          } else {
+            addTab(tabEls[i]);
+          }
         });
 
         var select = function(tab) {

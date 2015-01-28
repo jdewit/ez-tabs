@@ -50,7 +50,7 @@
     </div>
     <div class="page-body">
       <tabset>
-        <tab> 
+        <tab>
           <tab-heading>Tab 1</tab-heading>
           <tab-content>Transcluded variables bind of course. Likes: {{ likes }}</tab-content>
         </tab>
@@ -60,6 +60,12 @@
         </tab>
         <tab>
           <tab-heading>Tab 3</tab-heading>
+          <tab-content>
+            <button ng-click="showTab4 = !showTab4">Toggle Tab 4</button>
+          </tab-content>
+        </tab>
+        <tab ng-if="showTab4">
+          <tab-heading>Tab 4</tab-heading>
           <tab-content>More content</tab-content>
         </tab>
       </tabset>
@@ -68,7 +74,7 @@
       <hr>
       <br>
       <tabset class="tabs-left">
-        <tab> 
+        <tab>
           <tab-heading>Tab 1</tab-heading>
           <tab-content>More content</tab-content>
         </tab>
@@ -86,7 +92,7 @@
       <hr>
       <br>
       <tabset class="tabs-right" config="config">
-        <tab> 
+        <tab>
           <tab-heading>Tab 1</tab-heading>
           <tab-content src="custom.html"></tab-content>
         </tab>
