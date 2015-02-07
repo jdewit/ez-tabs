@@ -11,7 +11,6 @@
 
   <link href="dist/ez-tabs.min.css" rel="stylesheet"/>
   <script src="src/ez-tabs.js"></script>
-  <script src="dist/ez-tabs-tpl.min.js"></script>
 
   <script>
     angular.module('myApp', ['ez.tabs'])
@@ -20,8 +19,10 @@
       $scope.likes = 10;
 
       $scope.config = {
-        preSelectPromise: function() {
+        preSelectPromise: function(tab) {
           var deferred = $q.defer();
+
+          console.log(tab);
 
           setTimeout(function() {
             if (confirm('Are you sure?')) {
@@ -34,6 +35,12 @@
           return deferred.promise;
         }
       };
+
+      $scope.toggleTab4 = function() {
+        $scope.showTab4 = !$scope.showTab4;
+      };
+
+      $scope.tab2Heading = 'Tab 2';
 
       $interval(function() {
         $scope.likes++;
@@ -52,16 +59,18 @@
       <tabset>
         <tab>
           <tab-heading>Tab 1</tab-heading>
-          <tab-content>Transcluded variables bind of course. Likes: {{ likes }}</tab-content>
+          <tab-content><div meo></div>Transcluded variables bind of course. Likes: {{ likes }}</tab-content>
         </tab>
         <tab>
-          <tab-heading>Tab 2</tab-heading>
-          <tab-content>Other content</tab-content>
+        <tab-heading>{{ tab2Heading }}</tab-heading>
+          <tab-content>
+          Tab 2 Heading: <input type="text" ng-model="tab2Heading"/>
+          </tab-content>
         </tab>
         <tab>
           <tab-heading>Tab 3</tab-heading>
           <tab-content>
-            <button ng-click="showTab4 = !showTab4">Toggle Tab 4</button>
+            <button ng-click="toggleTab4()">Toggle Tab 4</button>
           </tab-content>
         </tab>
         <tab ng-if="showTab4">
@@ -92,10 +101,10 @@
         </tab>
       </tabset>
       <br>
-      <h3>Right Tabs <small>With selection control flow</small></h3>
+      <h3>Right Tabs <small>With selection control flow, without lazy load</small></h3>
       <hr>
       <br>
-      <tabset class="tabs-right" config="config">
+      <tabset class="tabs-right" config="config" lazy="false">
         <tab>
           <tab-heading>Tab 1</tab-heading>
           <tab-content src="custom.html"></tab-content>

@@ -5,8 +5,9 @@ Bootstrap 3 tabs directive.
 
 ###Features
 - Lazy tab loading
-- Load tab content via templateCache
+- Load tab content via templates
 - Pre selection control flow (decide if tab should be allowed to be selected)
+- Styling for left & right side tabs
 
 ###Installation
 

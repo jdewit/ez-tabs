@@ -1,77 +1,134 @@
 angular.module('ez.tabs', [])
 
 .constant('EzTabsConfig', {
+
   /**
    * Allow user to tie a promise into the selection of a tab
    */
-  preSelectPromise: null
+  preSelectPromise: null,
+
+  /**
+   * Only compile tab content if tab has been selected
+   */
+  lazy: true
+
 })
 
-.directive('tabset', ['$sce', '$templateCache', '$compile', 'EzTabsConfig', function($sce, $templateCache, $compile, EzTabsConfig) {
+.directive('tabset', ['$templateCache', '$compile', 'EzTabsConfig', function($templateCache, $compile, EzTabsConfig) {
   return {
     restrict: 'E',
     scope: {
-      config: '=?'
+      config: '=?',
+      tabIndex: '=?'
     },
-    compile: function(el, attr, tran) {
-      var tabEls = el.find('tab').remove();
+    compile: function($el, attrs) {
+      var $tabEls = $el.find('tab').remove();
+      var tabs = [];
+      var $pane;
+      var $li;
+      var $tabs;
+      var $panes;
+      var tabAttrs;
+      var $tpl = angular.element('<div><ul class="nav nav-tabs"></ul><div class="tab-content"></div></div>');
 
-      el.addClass('ez-tabs');
+      // copy over any attributes set on the tabset
+      for (var k in attrs.$attr) {
+        if (k !== 'config' && k !== 'tabIndex') {
+          $tpl.attr(k, attrs[k]);
+        }
+      }
 
-      return function(scope, $el) {
-        scope.tabs = [];
+      $tpl.addClass('ez-tabs');
+
+      $tabs = $tpl.find('ul');
+      $panes = $tpl.find('.tab-content');
+
+      $tabEls.each(function(i) {
+        $li = angular.element('<li data-index="'+ i +'"><a>' + $tabEls[i].children[0].innerHTML + '</a></li>');
+        $pane = angular.element('<div data-index="'+ i +'" class="tab-pane"><div class="tab-pane-content"></div></div>');
+
+        // copy over any attributes set on the tab
+        tabAttrs = $tabEls[i].attributes;
+        for (var j = 0; j < tabAttrs.length; j++) {
+          $li.find('a').attr(tabAttrs[j].nodeName, tabAttrs[j].value);
+          $pane.find('.tab-pane-content').attr(tabAttrs[j].nodeName, tabAttrs[j].value);
+        }
+
+        tabs.push({
+          src: $tabEls[i].children[1].getAttribute('src'),
+          rawHtml: $tabEls[i].children[1].innerHTML
+        });
+
+        $tabs.append($li);
+        $panes.append($pane);
+      });
+
+      return function(scope, $el, attrs) {
+        var tab;
+        var $html;
+        var select;
+
+        scope.tabs = tabs;
 
         scope.options = angular.extend({}, EzTabsConfig, scope.config);
 
-        tabEls.each(function(i) {
-          scope.tabs.push({
-            show: true,
-            heading: $sce.trustAsHtml(tabEls[i].children[0].innerHTML),
-            rawHtml: tabEls[i].children[1].innerHTML,
-            src: tabEls[i].children[1].getAttribute('src')
-          });
-
-          var ngIf = tabEls[i].getAttribute('ng-if');
-
-          if (ngIf) {
-            scope.$parent.$watch(ngIf, function(newVal) {
-              scope.tabs[i].show = !!newVal;
-            });
-          }
+        $tpl.find('.nav.nav-tabs').on('click', 'a', function() {
+          scope.select($(this).parent().data('index'));
         });
 
-        var select = function(tab) {
-          if (scope.tab) {
-            scope.tab.active = false;
-          }
-
-          scope.tab = tab;
-          tab.active = true;
+        var compileTab = function(i) {
+          tab = scope.tabs[i];
 
           if (tab.src) {
-            tab.html = $compile($templateCache.get(tab.src))(scope.$parent);
+            $html = $templateCache.get(tab.src);
           } else {
-            tab.html = $compile('<div>' + tab.rawHtml + '</div>')(scope.$parent);
+            $html = tab.rawHtml;
           }
 
-          angular.element($el[0].children[0].children[1].children[0]).html(tab.html);
+          $tpl.find('.tab-pane[data-index="'+ i +'"]').append($html);
+
+          $compile($tpl)(scope.$parent);
+
+          tab.compiled = true;
         };
 
-        scope.select = function(tab) {
+        // compile all tabs if we're feeling wasteful
+        if (!scope.options.lazy || attrs.lazy === 'false') {
+          for (var i = 0; i < tabs.length; i++) {
+            compileTab(i);
+          }
+        }
+
+        select = function(i) {
+          tab = scope.tabs[i];
+
+          if (!tab.compiled) {
+            compileTab(i);
+          }
+
+          $tpl.find('.active').removeClass('active');
+          $tpl.find('.tab-pane[data-index="'+ i +'"]').addClass('active');
+          $tpl.find('li[data-index="'+ i +'"]').addClass('active');
+
+          scope.tabIndex = i;
+        };
+
+        scope.select = function(i) {
           if (scope.options.preSelectPromise) {
-            scope.options.preSelectPromise(tab, $el).then(function() {
-              select(tab);
+            scope.options.preSelectPromise(scope.tabs[i], $tpl, i).then(function() {
+              select(i);
             });
           } else {
-            select(tab);
+            select(i);
           }
         };
 
-        // init
-        $el.append($compile($templateCache.get('ez-tabs.html'))(scope));
+        //init
 
-        select(scope.tabs[0]);
+        $el.replaceWith($tpl);
+        select(0);
       };
     }
   };
-}]);
+}])
+;

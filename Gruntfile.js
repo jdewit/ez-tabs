@@ -19,14 +19,8 @@ module.exports = function(grunt) {
       },
       src: {
         files: {
-          src: ['src/**/*.js', 'test/**/*.js']
+          src: ['src/**/*.js']
         },
-      }
-    },
-    karma: {
-      singleRun: {
-        configFile: 'karma.conf.js',
-        singleRun: true
       }
     },
     less: {
@@ -36,16 +30,6 @@ module.exports = function(grunt) {
       styles: {
         files: {
           'dist/ez-tabs.min.css': ['src/*.less']
-        }
-      }
-    },
-    ngtemplates:  {
-      ezTabs:      {
-        src:      'src/views/**/*.html',
-        dest:     'dist/ez-tabs-tpl.min.js',
-        options: {
-          module: 'ez.tabs',
-          url: function(url) { return url.replace('src/views/', ''); }
         }
       }
     },
@@ -71,11 +55,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-bump');
 
-  grunt.registerTask('default', ['jshint', 'ngtemplates', 'uglify', 'less']);
-
-  grunt.registerTask('test', ['karma:singleRun']);
+  grunt.registerTask('default', ['jshint', 'uglify', 'less']);
 
 };
