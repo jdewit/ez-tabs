@@ -85,9 +85,12 @@ angular.module('ez.tabs', [])
             $html = tab.rawHtml;
           }
 
+
+          //console.log(c);
+
           $tpl.find('.tab-pane[data-index="'+ i +'"]').append($html);
 
-          $compile($tpl)(scope.$parent);
+          $compile($tpl.find('.tab-pane[data-index="'+ i +'"]'))(scope.$parent);
 
           tab.compiled = true;
         };
@@ -124,8 +127,8 @@ angular.module('ez.tabs', [])
         };
 
         //init
-
         $el.replaceWith($tpl);
+        $compile($tabs)(scope.$parent);
         select(0);
       };
     }

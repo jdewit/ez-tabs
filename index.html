@@ -46,6 +46,13 @@
         $scope.likes++;
       }, 100);
     }])
+
+    .controller('FormCtrl', ['$scope', function($scope) {
+      $scope.form = {
+        name: 'Test',
+        description: 'What what!',
+      };
+    }])
 ;
 
   </script>
@@ -59,7 +66,7 @@
       <tabset>
         <tab>
           <tab-heading>Tab 1</tab-heading>
-          <tab-content><div meo></div>Transcluded variables bind of course. Likes: {{ likes }}</tab-content>
+          <tab-content>Transcluded variables bind of course. Likes: {{ likes }}</tab-content>
         </tab>
         <tab>
         <tab-heading>{{ tab2Heading }}</tab-heading>
@@ -89,7 +96,18 @@
       <tabset class="tabs-left">
         <tab>
           <tab-heading>Tab 1</tab-heading>
-          <tab-content>More content</tab-content>
+          <tab-content>
+            <table ng-controller="FormCtrl">
+              <tr>
+                <td><label>Name</label></td>
+                <td><input type="text" ng-model="form.name"/></td>
+              </tr>
+              <tr>
+                <td><label>Description</label></td>
+                <td><textarea ng-model="form.description"></textarea></td>
+              </tr>
+            </table>
+          </tab-content>
         </tab>
         <tab>
           <tab-heading>Tab 2</tab-heading>
