@@ -97,21 +97,36 @@
         <tab>
           <tab-heading>Tab 1</tab-heading>
           <tab-content>
-            <table ng-controller="FormCtrl">
-              <tr>
-                <td><label>Name</label></td>
-                <td><input type="text" ng-model="form.name"/></td>
-              </tr>
-              <tr>
-                <td><label>Description</label></td>
-                <td><textarea ng-model="form.description"></textarea></td>
-              </tr>
-            </table>
+              <form name="_form" ng-controller="FormCtrl">
+                <table> 
+                  <tr>
+                    <td><label>Name</label></td>
+                    <td><input type="text" ng-model="form.name"/></td>
+                  </tr>
+                  <tr>
+                    <td><label>Description</label></td>
+                    <td><textarea ng-model="form.description"></textarea></td>
+                  </tr>
+                </table>
+              </form>
           </tab-content>
         </tab>
         <tab>
           <tab-heading>Tab 2</tab-heading>
-          <tab-content>More content 2</tab-content>
+          <tab-content>
+              <form name="_form" ng-controller="FormCtrl">
+                <table> 
+                  <tr>
+                    <td><label>Name</label></td>
+                    <td><input type="text" ng-model="form.name"/></td>
+                  </tr>
+                  <tr>
+                    <td><label>Description</label></td>
+                    <td><textarea ng-model="form.description"></textarea></td>
+                  </tr>
+                </table>
+              </form>
+          </tab-content>
         </tab>
         <tab>
           <tab-heading>Tab 3</tab-heading>
@@ -133,12 +148,16 @@
         </tab>
         <tab>
           <tab-heading>Tab 3</tab-heading>
-          <tab-content>More content 3</tab-content>
+          <tab-content src="custom2.html"></tab-content>
         </tab>
       </tabset>
 
       <script id="custom.html" type="text/ng-template">
-        <p>I was loaded from a custom template</p>
+        <p>I was loaded from a custom template - {{ likes }}</p>
+      </script>
+
+      <script id="custom2.html" type="text/ng-template">
+        <p>I was loaded from a custom template 2 - {{ likes }}</p>
       </script>
     </div>
   </div>

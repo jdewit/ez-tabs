@@ -74,6 +74,7 @@ angular.module('ez.tabs', [])
 
         $tpl.find('.nav.nav-tabs').on('click', 'a', function() {
           scope.select($(this).parent().data('index'));
+          scope.$apply();
         });
 
         var compileTab = function(i) {
@@ -85,10 +86,7 @@ angular.module('ez.tabs', [])
             $html = tab.rawHtml;
           }
 
-
-          //console.log(c);
-
-          $tpl.find('.tab-pane[data-index="'+ i +'"]').append($html);
+          $tpl.find('.tab-pane[data-index="'+ i +'"]').html($html);
 
           $compile($tpl.find('.tab-pane[data-index="'+ i +'"]'))(scope.$parent);
 
@@ -128,7 +126,7 @@ angular.module('ez.tabs', [])
 
         //init
         $el.replaceWith($tpl);
-        $compile($tabs)(scope.$parent);
+        $compile($tpl)(scope.$parent);
         select(0);
       };
     }
