@@ -93,13 +93,6 @@ angular.module('ez.tabs', [])
           tab.compiled = true;
         };
 
-        // compile all tabs if we're feeling wasteful
-        if (!scope.options.lazy || attrs.lazy === 'false') {
-          for (var i = 0; i < tabs.length; i++) {
-            compileTab(i);
-          }
-        }
-
         select = function(i) {
           tab = scope.tabs[i];
 
@@ -127,6 +120,14 @@ angular.module('ez.tabs', [])
         //init
         $el.replaceWith($tpl);
         $compile($tpl)(scope.$parent);
+
+        // compile all tabs if we're feeling wasteful
+        if (!scope.options.lazy || attrs.lazy === 'false') {
+          for (var i = 0; i < tabs.length; i++) {
+            compileTab(i);
+          }
+        }
+
         select(0);
       };
     }
