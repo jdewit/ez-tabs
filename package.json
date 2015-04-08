@@ -2,7 +2,7 @@
   "name": "ez-tabs",
   "description": "Angular bootstrap tabs directive",
   "keywords": [],
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Joris de Wit",
   "repository": {
     "type": "git",
