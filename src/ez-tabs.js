@@ -56,7 +56,8 @@ angular.module('ez.tabs', [])
 
         tabs.push({
           src: $tabEls[i].children[1].getAttribute('src'),
-          rawHtml: $tabEls[i].children[1].innerHTML
+          rawHtml: $tabEls[i].children[1].innerHTML,
+          lazy: $tabEls[i].children[1].getAttribute('lazy')
         });
 
         $tabs.append($li);
@@ -123,8 +124,10 @@ angular.module('ez.tabs', [])
 
         // compile all tabs if we're feeling wasteful
         if (!scope.options.lazy || attrs.lazy === 'false') {
-          for (var i = 0; i < tabs.length; i++) {
-            compileTab(i);
+          for (var i = 0, l = tabs.length; i < l; i++) {
+            if (!tabs[i].lazy) {
+              compileTab(i);
+            }
           }
         }
 
