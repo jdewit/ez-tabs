@@ -105,6 +105,8 @@ angular.module('ez.tabs', [])
           $tpl.find('.tab-pane[data-index="'+ i +'"]').addClass('active');
           $tpl.find('li[data-index="'+ i +'"]').addClass('active');
 
+          scope.$parent.$broadcast('ez_tabs.selected', i);
+
           scope.tabIndex = i;
         };
 
