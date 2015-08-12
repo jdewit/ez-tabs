@@ -14,7 +14,17 @@ angular.module('ez.tabs', [])
 
 })
 
-.directive('tabset', ['$templateCache', '$compile', 'EzTabsConfig', function($templateCache, $compile, EzTabsConfig) {
+.directive('tabset', [
+  '$templateCache',
+  '$compile',
+  '$parse',
+  'EzTabsConfig',
+  function(
+    $templateCache,
+    $compile,
+    $parse,
+    EzTabsConfig
+  ) {
   return {
     restrict: 'E',
     scope: {
@@ -57,7 +67,7 @@ angular.module('ez.tabs', [])
         tabs.push({
           src: $tabEls[i].children[1].getAttribute('src'),
           rawHtml: $tabEls[i].children[1].innerHTML,
-          lazy: $tabEls[i].children[1].getAttribute('lazy')
+          lazy: $tabEls[i].getAttribute('lazy')
         });
 
         $tabs.append($li);
@@ -72,6 +82,11 @@ angular.module('ez.tabs', [])
         scope.tabs = tabs;
 
         scope.options = angular.extend({}, EzTabsConfig, scope.config);
+
+        // overide lazy option from tab attrs
+        if (attrs.lazy === 'false') {
+          scope.options.lazy = false;
+        }
 
         $tpl.find('.nav.nav-tabs').on('click', 'a', function() {
           scope.select($(this).parent().data('index'));
@@ -124,12 +139,13 @@ angular.module('ez.tabs', [])
         $el.replaceWith($tpl);
         $compile($tpl)(scope.$parent);
 
-        // compile all tabs if we're feeling wasteful
-        if (!scope.options.lazy || attrs.lazy === 'false') {
-          for (var i = 0, l = tabs.length; i < l; i++) {
-            if (!tabs[i].lazy) {
-              compileTab(i);
-            }
+        for (var i = 0, l = tabs.length; i < l; i++) {
+           // compile tabs if necessary
+          if (
+            scope.options.lazy === false ||
+            tabs[i].lazy !== null && (tabs[i].lazy === 'false' || $parse(tabs[i].lazy)(scope.$parent) === false)
+          ) {
+            compileTab(i);
           }
         }
 
