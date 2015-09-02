@@ -50,7 +50,7 @@ angular.module('ez.tabs', [])
 
       $tpl.addClass('ez-tabs');
 
-      $tabs = $tpl.find('ul');
+      $tabs = $tpl.find('ul.nav-tabs');
       $panes = $tpl.find('.tab-content');
 
       $tabEls.each(function(i) {
@@ -88,7 +88,7 @@ angular.module('ez.tabs', [])
           scope.options.lazy = false;
         }
 
-        $tpl.find('.nav.nav-tabs').on('click', 'a', function() {
+        $tabs.on('click', 'a', function() {
           scope.select($(this).parent().data('index'));
           scope.$apply();
         });
@@ -116,9 +116,10 @@ angular.module('ez.tabs', [])
             compileTab(i);
           }
 
-          $tpl.find('.active').removeClass('active');
-          $tpl.find('.tab-pane[data-index="'+ i +'"]').addClass('active');
-          $tpl.find('li[data-index="'+ i +'"]').addClass('active');
+          $tabs.find('.active').removeClass('active');
+          $panes.find('.tab-pane.active').removeClass('active');
+          $panes.find('.tab-pane[data-index="'+ i +'"]').addClass('active');
+          $tabs.find('li[data-index="'+ i +'"]').addClass('active');
 
           scope.$parent.$broadcast('ez_tabs.selected', i);
 
