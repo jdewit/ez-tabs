@@ -10,7 +10,12 @@ angular.module('ez.tabs', [])
   /**
    * Only compile tab content if tab has been selected
    */
-  lazy: true
+  lazy: true,
+
+  /**
+   * The initial tab to make active
+   */
+  initialTabIndex: 0
 
 })
 
@@ -29,7 +34,8 @@ angular.module('ez.tabs', [])
     restrict: 'E',
     scope: {
       config: '=?',
-      tabIndex: '=?'
+      tabIndex: '=?',
+      initialTabIndex: '=?'
     },
     compile: function($el, attrs) {
       var $tabEls = $el.find('tab').remove();
@@ -82,6 +88,8 @@ angular.module('ez.tabs', [])
         scope.tabs = tabs;
 
         scope.options = angular.extend({}, EzTabsConfig, scope.config);
+
+        scope.initialTabIndex = scope.initialTabIndex || scope.options.initialTabIndex;
 
         // overide lazy option from tab attrs
         if (attrs.lazy === 'false') {
@@ -150,7 +158,7 @@ angular.module('ez.tabs', [])
           }
         }
 
-        select(0);
+        select(scope.initialTabIndex);
       };
     }
   };
